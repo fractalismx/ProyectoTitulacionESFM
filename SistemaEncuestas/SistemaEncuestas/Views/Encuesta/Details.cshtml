@@ -1,0 +1,82 @@
+﻿@model SistemaEncuestas.Models.Domain.Encuesta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Encuesta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Alta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCategorias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdCategorias)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar", "Details/"+Model.IdCategorias,"Categoria") |
+    @Html.ActionLink("Nueva Pregunta","Create/"+Model.Id,"Pregunta")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Nombre Pregunta
+        </th>
+        <th>
+            Id Encuesta
+        </th>
+    </tr>
+
+    @if (Model.Preguntas != null)
+    {
+        foreach (var item in Model.Preguntas)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEncuestas)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit/" + item.Id, "Pregunta") |
+                @Html.ActionLink("Detalles", "Details/" + item.Id, "Pregunta") 
+            </td>
+        </tr>
+        }
+    }
+
+</table>

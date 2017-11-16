@@ -1,0 +1,34 @@
+﻿@model SistemaEncuestas.Models.Domain.Pregunta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pregunta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEncuestas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdEncuestas)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Details/"+Model.IdEncuestas,"Encuesta")
+</p>

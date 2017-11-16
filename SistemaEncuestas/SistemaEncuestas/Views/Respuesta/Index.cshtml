@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SistemaEncuestas.Models.Domain.Respuesta>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdPreguntas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdPreguntas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdUsuario)
+        </td>
+    </tr>
+}
+
+</table>
