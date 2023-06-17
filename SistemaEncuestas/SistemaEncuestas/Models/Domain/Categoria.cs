@@ -9,7 +9,7 @@ namespace SistemaEncuestas.Models.Domain
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public int Estatus {get; set; }
+        public bool Estatus {get; set; }
 
         public virtual ICollection<Encuesta> Encuestas { get; set; }
     }
