@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using SistemaEncuestas.Models.Domain;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace SistemaEncuestas.Models
 {
@@ -15,7 +17,7 @@ namespace SistemaEncuestas.Models
     {
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
-        public string Sexo { get; set; }
+        public int Genero { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -30,7 +32,7 @@ namespace SistemaEncuestas.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(): base("MyConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("MyConnection", throwIfV1Schema: false)
         {
 
         }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace SistemaEncuestas.Models.Domain
 {
@@ -13,8 +14,20 @@ namespace SistemaEncuestas.Models.Domain
         private string id;
         private string nombre;
         private string apellidos;
-        private string sexo;
+        private int genero;
         private string email;
+
+        public Usuario()
+        {
+            ActionsList = new List<SelectListItem>();
+        }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> ActionsList 
+        { 
+            get; 
+            set; 
+        }
 
         [Key]
         [Column("Id")]
@@ -38,11 +51,11 @@ namespace SistemaEncuestas.Models.Domain
             set { apellidos = value; }
         }
 
-        [Column("Sexo")]
-        public string Sexo
+        [Column("Genero")]
+        public int Genero
         {
-            get { return sexo; }
-            set { sexo = value; }
+            get { return genero; }
+            set { genero = value; }
         }
 
         [Column("Email")]

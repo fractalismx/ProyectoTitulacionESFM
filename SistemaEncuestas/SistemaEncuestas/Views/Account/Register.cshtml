@@ -5,7 +5,7 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Cree una cuenta nueva.</h4>
@@ -14,61 +14,64 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Nombre, new { @class = "form-label" })
+        <div class="mb-3">
             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Apellidos, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Apellidos, new { @class = "form-label" })
+        <div class="mb-3">
             @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Sexo, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Sexo, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Genero, new { @class = "form-label" })
+        <div class="mb-3">
+            @*@Html.DropDownListFor(m => m.Genero, (IEnumerable<SelectListItem>)ViewBag.opciones, null, htmlAttributes: new { @class = "form-select" })*@
+            @*@Html.DropDownList("Genero", (IEnumerable<SelectListItem>)ViewBag.opciones, new { @class = "form-select" })*@
+            @*@Html.TextBoxFor(m => m.Genero, new { @class = "form-control" })*@
+            @Html.DropDownListFor(model => model.Genero, Model.ActionsList, htmlAttributes: new { @class = "form-select" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+        <div class="mb-3">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+        <div class="mb-3">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+        <div class="mb-3">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Registrarse" />
+        <div class="mb-3">
+            <input type="submit" class="btn btn-primary" value="Registrarse" />
         </div>
     </div>
 }
 
-<select id="ddlist"> </select>
+@*<select id="ddlist"> </select>*@
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $.ajax(
             {
                 url: "http://localhost:49880/Categoria/GetCategorias",
@@ -89,5 +92,5 @@
         {
             alert($("#ddlist option:selected"));
         });
-    </script>
+    </script>*@
 }

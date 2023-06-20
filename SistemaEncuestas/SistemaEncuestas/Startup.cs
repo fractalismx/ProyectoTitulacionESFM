@@ -33,11 +33,11 @@ namespace SistemaEncuestas
                 rol.Name = "Admin";
                 roleManager.Create(rol);
 
-                user.Nombre = "Ciro";
-                user.Email = "ciro@ejemplo.com";
+                user.Nombre = "Admin";
+                user.Email = "admin@ejemplo.com";
                 user.UserName = user.Email;
-                user.Apellidos = "Mendoza Eumaña";
-                user.Sexo = "Hombre";
+                user.Apellidos = "";
+                user.Genero = 3;
 
                 string userPWD = "123456";
 

@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SistemaEncuestas.Models;
+using SistemaEncuestas.Models.Domain;
 
 namespace SistemaEncuestas.Controllers
 {
@@ -22,7 +26,7 @@ namespace SistemaEncuestas.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +38,9 @@ namespace SistemaEncuestas.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -120,7 +124,7 @@ namespace SistemaEncuestas.Controllers
             // Si un usuario introduce códigos incorrectos durante un intervalo especificado de tiempo, la cuenta del usuario 
             // se bloqueará durante un período de tiempo especificado. 
             // Puede configurar el bloqueo de la cuenta en IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -139,7 +143,16 @@ namespace SistemaEncuestas.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var user = new RegisterViewModel();
+            IEnumerable<Genero> GenderType = Enum.GetValues(typeof(Genero)).Cast<Genero>();
+            user.ActionsList= from action in GenderType
+                              select new SelectListItem
+                              {
+                                  Text = action.ToString(),
+                                  Value = ((int)action).ToString()
+                              };
+
+            return View(user);
         }
 
         //
@@ -149,26 +162,21 @@ namespace SistemaEncuestas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            var user = new ApplicationUser();
             if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email,
-                                                 Email = model.Email,
-                                                 Nombre =model.Nombre,
-                                                 Apellidos=model.Apellidos,
-                                                 Sexo=model.Sexo};
-                var result = await UserManager.CreateAsync(user, model.Password);
+            {             
+                user.UserName = model.Email;
+                user.Email = model.Email;
+                user.Nombre = model.Nombre;
+                user.Apellidos = model.Apellidos;
+                user.Genero = model.Genero;
 
-                /*
-                if (chkUser.Succeeded)
-                {
-                    var result = userManager.AddToRoles(user.Id, "Admin");
-                }
-                 */
+                var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    var r = UserManager.AddToRoles(user.Id,"User");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var r = UserManager.AddToRoles(user.Id, "User");
 
                     // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar correo electrónico con este vínculo
@@ -180,6 +188,14 @@ namespace SistemaEncuestas.Controllers
                 }
                 AddErrors(result);
             }
+;
+            IEnumerable<Genero> GenderType = Enum.GetValues(typeof(Genero)).Cast<Genero>();
+            model.ActionsList = from action in GenderType
+                               select new SelectListItem
+                               {
+                                   Text = action.ToString(),
+                                   Value = ((int)action).ToString()
+                               };
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);

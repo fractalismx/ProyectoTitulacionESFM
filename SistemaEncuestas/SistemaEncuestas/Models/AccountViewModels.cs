@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+//using System.Web.Mvc;
 
 namespace SistemaEncuestas.Models
 {
@@ -64,6 +66,13 @@ namespace SistemaEncuestas.Models
 
     public class RegisterViewModel
     {
+        [NotMapped]
+        public IEnumerable<System.Web.Mvc.SelectListItem> ActionsList
+        {
+            get;
+            set;
+        }
+
         [Required]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
@@ -73,8 +82,8 @@ namespace SistemaEncuestas.Models
         public string Apellidos { get; set; }
 
         [Required]
-        [Display(Name = "Sexo")]
-        public string Sexo { get; set; }
+        [Display(Name = "Genero")]
+        public int Genero { get; set; }
 
         [Required]
         [EmailAddress]
