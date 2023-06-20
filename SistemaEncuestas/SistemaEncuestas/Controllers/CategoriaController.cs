@@ -25,7 +25,7 @@ namespace SistemaEncuestas.Controllers
         }
         // GET: Categoria
 
-        [Authorize(Roles = "Usuario, Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             List<Categoria> lista = service.ListarTodo();
@@ -45,7 +45,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Usuario, Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int id)
         {
             return View(service.ObtenerPorId(id));

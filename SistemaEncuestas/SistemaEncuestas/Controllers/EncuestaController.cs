@@ -36,7 +36,7 @@ namespace SistemaEncuestas.Controllers
 
         }
         // GET: Encuesta
-        [Authorize(Roles = "Usuario, Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Index()
         {
             List<Encuesta> lista = service.ListarTodo();
@@ -48,7 +48,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Usuario, Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Details(int id)
         {
             return View(service.ObtenerPorId(id));
@@ -118,7 +118,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Usuario, Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Responder(EncuestaViewModel evm)
         {
             if(respuestaService.Guardar(evm.Respuestas))
