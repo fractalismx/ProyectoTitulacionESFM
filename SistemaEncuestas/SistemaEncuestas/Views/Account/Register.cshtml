@@ -30,9 +30,6 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Genero, new { @class = "form-label" })
         <div class="mb-3">
-            @*@Html.DropDownListFor(m => m.Genero, (IEnumerable<SelectListItem>)ViewBag.opciones, null, htmlAttributes: new { @class = "form-select" })*@
-            @*@Html.DropDownList("Genero", (IEnumerable<SelectListItem>)ViewBag.opciones, new { @class = "form-select" })*@
-            @*@Html.TextBoxFor(m => m.Genero, new { @class = "form-control" })*@
             @Html.DropDownListFor(model => model.Genero, Model.ActionsList, htmlAttributes: new { @class = "form-select" })
         </div>
     </div>
