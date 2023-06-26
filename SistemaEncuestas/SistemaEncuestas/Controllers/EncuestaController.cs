@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using SistemaEncuestas.Bussiness;
+﻿using SistemaEncuestas.Bussiness;
 using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SistemaEncuestas.Controllers
@@ -27,14 +24,15 @@ namespace SistemaEncuestas.Controllers
             this.usuarioService = usuarioService;
         }
 
-        public EncuestaController():
-            this (new EncuestaService(),
+        public EncuestaController() :
+            this(new EncuestaService(),
                   new PreguntaService(),
                   new RespuestaService(),
                   new UsuarioService())
         {
 
         }
+
         // GET: Encuesta
         [Authorize(Roles = "User, Admin")]
         public ActionResult Index()
@@ -60,7 +58,7 @@ namespace SistemaEncuestas.Controllers
         {
             int aux = encuesta.IdCategorias;
             if (service.Eliminar(encuesta.Id))
-                return RedirectToAction("Details/" + aux, "Categoria" );
+                return RedirectToAction("Details/" + aux, "Categoria");
             return View(encuesta);
         }
 
@@ -75,7 +73,7 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(int id)
         {
-            Encuesta e = new Encuesta { IdCategorias=id};
+            Encuesta e = new Encuesta { IdCategorias = id };
 
             return View(e);
         }
@@ -104,12 +102,12 @@ namespace SistemaEncuestas.Controllers
         public ActionResult Edit(Encuesta encuesta)
         {
             if (service.Actualizar(encuesta))
-                return RedirectToAction("Details/"+encuesta.IdCategorias, "Categoria");
+                return RedirectToAction("Details/" + encuesta.IdCategorias, "Categoria");
             return View(encuesta);
         }
 
         [HttpGet]
-        [Authorize(Roles ="Usuario, Admin")]
+        [Authorize(Roles = "Usuario, Admin")]
         public ActionResult Responder(int id)
         {
 
@@ -121,8 +119,8 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Responder(EncuestaViewModel evm)
         {
-            if(respuestaService.Guardar(evm.Respuestas))
-                return RedirectToAction("Index","Categoria");
+            if (respuestaService.Guardar(evm.Respuestas))
+                return RedirectToAction("Index", "Categoria");
 
             return View(evm);
         }

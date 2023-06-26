@@ -7,10 +7,10 @@
 <h2>Crear</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div>
         <h4>Categoria</h4>
         <hr />
@@ -26,10 +26,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Estatus, htmlAttributes: new { @class = "form-label" })
             <div class="mb-3">
-                @Html.CheckBoxFor(model=>model.Estatus,
+                @Html.CheckBoxFor(model => model.Estatus,
                  new
                  {
-                     @class= "form-check-input",
+                     @class = "form-check-input",
                      @style = "width:2em; height: 2em;"
                  })
             </div>

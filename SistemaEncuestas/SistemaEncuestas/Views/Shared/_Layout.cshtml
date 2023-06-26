@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Sistema de Encuestas</title>
@@ -18,16 +18,16 @@
 
                 @Html.ActionLink("Sistema de Encuestas", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        @*ActionLink(this HtmlHelper htmlHelper, string linkText, string actionName, object routeValues, object htmlAttributes)*@
-                        <li class="nav-item">@Html.ActionLink("Categorias", "Index", "Categoria", new { area = "" }, new { @class = "nav-link active" })</li>
-                        <li class="nav-item">@Html.ActionLink("Mis encuestas contestadas", "ListEncuestas", "Usuario", new { area = "" }, new { @class = "nav-link active" })</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @*ActionLink(this HtmlHelper htmlHelper, string linkText, string actionName, object routeValues, object htmlAttributes)*@
+                    <li class="nav-item">@Html.ActionLink("Categorias", "Index", "Categoria", new { area = "" }, new { @class = "nav-link active" })</li>
+                    <li class="nav-item">@Html.ActionLink("Mis encuestas contestadas", "ListEncuestas", "Usuario", new { area = "" }, new { @class = "nav-link active" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
+    </div>
     <div class="container-lg" style="padding-top: 3em !important;">
         @RenderBody()
         <hr />

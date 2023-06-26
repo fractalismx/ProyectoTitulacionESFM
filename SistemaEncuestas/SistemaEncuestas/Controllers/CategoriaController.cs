@@ -1,11 +1,7 @@
 ﻿using SistemaEncuestas.Bussiness;
 using SistemaEncuestas.Models.Domain;
-using SistemaEncuestas.Models.Repository;
-using SistemaEncuestas.Models.Repository.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SistemaEncuestas.Controllers
@@ -19,12 +15,12 @@ namespace SistemaEncuestas.Controllers
             this.service = service;
         }
 
-        public CategoriaController():this (new CategoriaService())
+        public CategoriaController() : this(new CategoriaService())
         {
 
         }
-        // GET: Categoria
 
+        // GET: Categoria
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
@@ -40,8 +36,8 @@ namespace SistemaEncuestas.Controllers
         public JsonResult GetCategorias()
         {
             List<Categoria> list = service.ListarTodo() ?? new List<Categoria>();
-            var listaAcomodada = list.OrderBy(c => c.Nombre).Select(c=>new { id=c.Id,texto=c.Nombre});
-            return Json(listaAcomodada,JsonRequestBehavior.AllowGet);
+            var listaAcomodada = list.OrderBy(c => c.Nombre).Select(c => new { id = c.Id, texto = c.Nombre });
+            return Json(listaAcomodada, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -52,7 +48,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(Categoria categoria)
         {
             if (service.Eliminar(categoria.Id))
