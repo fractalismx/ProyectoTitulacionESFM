@@ -33,6 +33,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public JsonResult GetCategorias()
         {
             List<Categoria> list = service.ListarTodo() ?? new List<Categoria>();
@@ -41,7 +42,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Details(int id)
         {
             return View(service.ObtenerPorId(id));

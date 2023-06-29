@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        @Html.HiddenFor(m => m.IdEncuestas, new { @id = "IdEncuesta" });
+        @Html.HiddenFor(m => m.IdEncuestas, new { @id = "IdEncuesta" })
 
         <div class="form-group">
             <div class="mb-3">
@@ -34,7 +34,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Regresar", "Details/" + Model.IdEncuestas, "Encuesta")
 </div>
 
 @section Scripts {

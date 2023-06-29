@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 
 namespace SistemaEncuestas.Models.Domain
 {
@@ -14,6 +16,7 @@ namespace SistemaEncuestas.Models.Domain
         public DateTime Alta { get; set; }
 
         [ForeignKey("Categorias")]
+        [Display(Name = "Identificador de categoría")]
         public int IdCategorias { get; set; }
 
         public virtual Categoria Categorias { get; set; }
