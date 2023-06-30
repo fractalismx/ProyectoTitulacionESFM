@@ -1,3 +1,3 @@
-# ProyectoUniti
+# Proyecto de ejemplo para la titulacion
 
-Aqui se aloja el proyecto de Pablo Tapia Marin de la G15 de Uniti
+Aqui se aloja el proyecto de Pablo Tapia Marin egresado en 2017
