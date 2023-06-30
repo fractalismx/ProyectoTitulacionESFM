@@ -57,7 +57,7 @@ namespace SistemaEncuestas.Bussiness
             List<Encuesta> enc = new List<Encuesta>();
 
 
-            enc = repositoryRespuesta.GetAll().Where(c=>c.IdUsuario==id).Select(c => c.Preguntas.Encuestas).Distinct().ToList();
+            //enc = repositoryRespuesta.GetAll().Where(c=>c.IdUsuario==id).Select(c => c.Preguntas.Encuestas).Distinct().ToList();
 
             return enc;
             

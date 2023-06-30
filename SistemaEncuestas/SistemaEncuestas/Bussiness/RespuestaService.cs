@@ -58,7 +58,7 @@ namespace SistemaEncuestas.Bussiness
             {
                 foreach (var item in respuestas)
                 {
-                    item.IdUsuario = HttpContext.Current.User.Identity.GetUserId();
+                    //item.IdUsuario = HttpContext.Current.User.Identity.GetUserId();
                     repository.Create(item);
                 }
                 unitOfWork.Commit();
