@@ -226,6 +226,7 @@
     <Compile Include="Bussiness\EncuestaService.cs" />
     <Compile Include="Bussiness\PreguntaService.cs" />
     <Compile Include="Bussiness\RespuestaService.cs" />
+    <Compile Include="Bussiness\RespuestaUsuarioService.cs" />
     <Compile Include="Bussiness\UsuarioService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PreguntaController.cs" />
+    <Compile Include="Controllers\RespuestaUsuarioController.cs" />
     <Compile Include="Controllers\RespuestaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -244,11 +246,13 @@
     <Compile Include="Models\Domain\Encuesta.cs" />
     <Compile Include="Models\Domain\Pregunta.cs" />
     <Compile Include="Models\Domain\Respuesta.cs" />
+    <Compile Include="Models\Domain\RespuestaUsuario.cs" />
     <Compile Include="Models\Domain\Usuario.cs" />
     <Compile Include="Models\Repository\Entity\CategoriaRepository.cs" />
     <Compile Include="Models\Repository\Entity\EncuestaRepository.cs" />
     <Compile Include="Models\Repository\Entity\PreguntaRepository.cs" />
     <Compile Include="Models\Repository\Entity\RespuestaRepository.cs" />
+    <Compile Include="Models\Repository\Entity\RespuestaUsuarioRepository.cs" />
     <Compile Include="Models\Repository\Entity\UsuarioRepository.cs" />
     <Compile Include="Models\Repository\ICRUD.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -256,7 +260,6 @@
     <Compile Include="Models\Repository\Infrastructure\ContextFactory.cs" />
     <Compile Include="Models\Repository\Infrastructure\SistemaEncuestaContext.cs" />
     <Compile Include="Models\Repository\Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Models\Repository\Infrastructure\UsuarioContext.cs" />
     <Compile Include="Models\Repository\IUnitOfWork.cs" />
     <Compile Include="Models\ViewModels\EncuestaRespondidaViewModel.cs" />
     <Compile Include="Models\ViewModels\EncuestaViewModel.cs" />
@@ -393,6 +396,11 @@
     <Content Include="Views\Categoria\Details.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
+    <Content Include="Views\RespuestaUsuario\Create.cshtml" />
+    <Content Include="Views\RespuestaUsuario\Delete.cshtml" />
+    <Content Include="Views\RespuestaUsuario\Details.cshtml" />
+    <Content Include="Views\RespuestaUsuario\Edit.cshtml" />
+    <Content Include="Views\RespuestaUsuario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

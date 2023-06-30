@@ -21,6 +21,7 @@ namespace SistemaEncuestas.Controllers
         {
 
         }
+
         // GET: Pregunta
         [Authorize(Roles = "Admin, Usuario")]
         public ActionResult Index()

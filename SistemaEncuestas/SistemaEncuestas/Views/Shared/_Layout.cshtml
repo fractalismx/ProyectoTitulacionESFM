@@ -30,9 +30,15 @@
     </div>
     <div class="container-lg" style="padding-top: 3em !important;">
         @RenderBody()
+
+        @{ 
+            System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Diagnostics.FileVersionInfo fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(asm.Location);
+            string version = fileVersionInfo.FileVersion;
+        }
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Sistema de Encuestas</p>
+            <p>&copy; @DateTime.Now.Year - Sistema de Encuestas - @version</p>
         </footer>
     </div>
 

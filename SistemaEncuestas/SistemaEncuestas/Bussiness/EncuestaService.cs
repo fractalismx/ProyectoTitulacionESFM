@@ -54,8 +54,7 @@ namespace SistemaEncuestas.Bussiness
             catch(Exception ex)
             {
                 return listaP;
-            }
-           
+            }   
         }
 
         private EncuestaViewModel FactoryRespuesta(List<Pregunta> pregs)

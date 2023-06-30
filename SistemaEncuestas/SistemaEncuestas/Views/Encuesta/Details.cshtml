@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
     <h4>Encuesta</h4>
@@ -46,8 +46,8 @@
 </div>
 <p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Regresar", "Details/"+Model.IdCategorias,"Categoria") |
-    @Html.ActionLink("Nueva Pregunta","Create/"+Model.Id,"Pregunta")
+    @Html.ActionLink("Regresar", "Details/" + Model.IdCategorias, "Categoria") |
+    @Html.ActionLink("Nueva Pregunta", "Create/" + Model.Id, "Pregunta")
 </p>
 
 <table class="table">
@@ -64,18 +64,18 @@
     {
         foreach (var item in Model.Preguntas)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEncuestas)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit/" + item.Id, "Pregunta") |
-                @Html.ActionLink("Detalles", "Details/" + item.Id, "Pregunta") 
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdEncuestas)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit/" + item.Id, "Pregunta") |
+                    @Html.ActionLink("Detalles", "Details/" + item.Id, "Pregunta") 
+                </td>
+            </tr>
         }
     }
 

@@ -111,18 +111,21 @@ namespace SistemaEncuestas.Controllers
         public ActionResult Responder(int id)
         {
 
-            EncuestaViewModel preguntas = service.Contestar(id);
-            return View(preguntas);
+            //EncuestaViewModel preguntas = service.Contestar(id);
+            //return View(preguntas);
+            return View(new EncuestaViewModel());
         }
 
         [HttpPost]
         [Authorize(Roles = "User, Admin")]
         public ActionResult Responder(EncuestaViewModel evm)
         {
-            if (respuestaService.Guardar(evm.Respuestas))
-                return RedirectToAction("Index", "Categoria");
+            //if (respuestaService.Guardar(evm.Respuestas))
+            //    return RedirectToAction("Index", "Categoria");
 
-            return View(evm);
+            //return View(evm);
+
+            return View(new EncuestaViewModel());
         }
     }
 }

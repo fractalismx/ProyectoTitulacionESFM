@@ -27,7 +27,7 @@ namespace SistemaEncuestas.Models
             return userIdentity;
         }
 
-        public virtual ICollection<Respuesta> Respuestas { get; set; }
+        public virtual ICollection<RespuestaUsuario> RespuestaUsuarios { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -46,6 +46,7 @@ namespace SistemaEncuestas.Models
         public DbSet<Encuesta> Encuestas { get; set; }
         public DbSet<Pregunta> Preguntas { get; set; }
         public DbSet<Respuesta> Respuestas { get; set; }
+        public DbSet<RespuestaUsuario> RespuestaUsuarios { get; set; }
         //public DbSet<Usuario> Usuario { get; set; }
     }
 }

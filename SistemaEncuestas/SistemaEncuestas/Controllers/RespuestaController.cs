@@ -17,7 +17,7 @@ namespace SistemaEncuestas.Controllers
             this.service = service;
         }
 
-        public RespuestaController():this (new RespuestaService())
+        public RespuestaController() : this(new RespuestaService())
         {
 
         }
@@ -52,9 +52,12 @@ namespace SistemaEncuestas.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View(new Respuesta());
+            Respuesta respuesta = new Respuesta();
+
+            respuesta.IdPreguntas = id;
+            return View(respuesta);
         }
 
         [HttpPost]
@@ -62,7 +65,7 @@ namespace SistemaEncuestas.Controllers
         public ActionResult Create(Respuesta respuesta)
         {
             if (service.Guardar(respuesta))
-                return RedirectToAction("Index");
+                return RedirectToAction("Details/" + respuesta.IdPreguntas, "Pregunta");
 
             return View(respuesta);
         }
@@ -79,7 +82,7 @@ namespace SistemaEncuestas.Controllers
         public ActionResult Edit(Respuesta respuesta)
         {
             if (service.Actualizar(respuesta))
-                return RedirectToAction("Index");
+                return RedirectToAction("Details/" + respuesta.IdPreguntas, "Pregunta");
             return View(respuesta);
         }
     }

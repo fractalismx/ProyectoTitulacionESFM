@@ -19,7 +19,8 @@ namespace SistemaEncuestas.Models.Domain
         public int IdEncuestas { get; set; }
 
         public virtual Encuesta Encuestas { get; set; }
+        public virtual ICollection<RespuestaUsuario> RespuestaUsuarios { get; set; }
 
-        public virtual ICollection<Respuesta> Respuestas {get;set;}
+        public virtual ICollection<Respuesta> Respuestas { get; set; }
     }
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
     <h4>Pregunta</h4>
@@ -28,7 +28,31 @@
 
     </dl>
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Details/"+Model.IdEncuestas,"Encuesta")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar", "Details/" + Model.IdEncuestas, "Encuesta") |
+    @Html.ActionLink("Nueva Respuesta", "Create/" + Model.Id, "Respuesta")
 </p>
+<table class="table">
+    <tr>
+        <th>
+            Respuesta
+        </th>
+    </tr>
+
+    @if (Model.Respuestas != null)
+    {
+        foreach (var item in Model.Respuestas)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit/" + item.Id, "Respuesta")
+                </td>
+            </tr>
+        }
+    }
+</table>
