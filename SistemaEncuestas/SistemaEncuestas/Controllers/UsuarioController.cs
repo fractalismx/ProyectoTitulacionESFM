@@ -100,6 +100,7 @@ namespace SistemaEncuestas.Controllers
             return View();
         }
 
+
         
          * [HttpGet]
         [Authorize(Roles ="Usuario, Admin")]
