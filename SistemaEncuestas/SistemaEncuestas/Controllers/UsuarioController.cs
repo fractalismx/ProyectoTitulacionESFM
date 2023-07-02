@@ -91,25 +91,5 @@ namespace SistemaEncuestas.Controllers
                 return RedirectToAction("Index");
             return View(usuario);
         }
-
-        /*
-        [Authorize(Roles ="Admin, User")]
-        public ActionResult EncuestaContestada()
-        {
-            int
-            return View();
-        }
-
-
-        
-         * [HttpGet]
-        [Authorize(Roles ="Usuario, Admin")]
-        public ActionResult Responder(int id)
-        {
-
-            EncuestaViewModel preguntas = service.Contestar(id);
-            return View(preguntas);
-        }
-         */
     }
 }

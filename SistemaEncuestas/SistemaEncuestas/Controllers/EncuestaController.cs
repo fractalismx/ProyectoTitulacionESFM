@@ -110,10 +110,8 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "Usuario, Admin")]
         public ActionResult Responder(int id)
         {
-
-            //EncuestaViewModel preguntas = service.Contestar(id);
-            //return View(preguntas);
-            return View(new EncuestaViewModel());
+            EncuestaViewModel preguntas = service.CargarPreguntas(id);
+            return View(preguntas);
         }
 
         [HttpPost]
