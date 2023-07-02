@@ -7,29 +7,44 @@
 
 @using (Html.BeginForm("Responder", "Encuesta", FormMethod.Post))
 {
-    @Html.HiddenFor(modelItem => Model.Preguntas)
+    @Html.AntiForgeryToken()
+    var j = 0;
 
     for (int i = 0; i < Model.Preguntas.Count; i++)
     {
-        @Html.DisplayFor(modelItem => Model.Preguntas[i].NombreP, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.HiddenFor(modelItem => Model.Preguntas[i].Id)
-        <br />
+        <dt>
+            @Html.DisplayFor(modelItem => Model.Preguntas[i].NombreP)
+            <input hidden name="Respuestas[@j].IdPreguntas" value=@Model.Preguntas[i].Id />
+        </dt>
 
-        List<SistemaEncuestas.Models.Domain.Respuesta> resp = Model.Respuestas[i];
-
-        for (int j = 0; j < resp.Count; j++)
+        foreach (var respuesta in Model.Respuestas[i])
         {
-            @Html.RadioButton("Respuesta" + resp[j].Id, resp[j].Id, false) @resp[j].Nombre
-            <br />
+            <dd>
+                <div>
+                    @Html.RadioButton("respuesta[" + j + "].Id", respuesta.Id)
+                    @Html.TextBoxFor(modelItem => respuesta.Nombre, new { @hidden = "hidden" })
+                    @Html.DisplayFor(modelItem => respuesta.Nombre)
+                </div>
+            </dd>
         }
-        <br />
+
+        j++;
     }
 
-    <br />
-
-    <div class="from-group">
-        <div class="mb-3">
-            <input type="submit" class="btn btn-primary" value="Enviar Respuestas" />
-        </div>
-    </div>
+    <dt>
+        <input type="submit" class="btn btn-primary" value="Enviar Respuestas" />
+    </dt>
 }
+
+<script>
+    $("form").submit(function ()
+    {
+        $("input[type='radio']").each(function ()
+        {
+            if ($(this).is(":checked"))
+            {
+                $(this).next().attr("name", $(this).attr("name").split("Id")[0] + "AnswerText");
+            }
+        });
+    });
+</script>
