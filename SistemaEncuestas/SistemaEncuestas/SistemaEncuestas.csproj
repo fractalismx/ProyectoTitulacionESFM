@@ -234,7 +234,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PreguntaController.cs" />
-    <Compile Include="Controllers\RespuestaUsuarioController.cs" />
     <Compile Include="Controllers\RespuestaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -396,11 +395,6 @@
     <Content Include="Views\Categoria\Details.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
-    <Content Include="Views\RespuestaUsuario\Create.cshtml" />
-    <Content Include="Views\RespuestaUsuario\Delete.cshtml" />
-    <Content Include="Views\RespuestaUsuario\Details.cshtml" />
-    <Content Include="Views\RespuestaUsuario\Edit.cshtml" />
-    <Content Include="Views\RespuestaUsuario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

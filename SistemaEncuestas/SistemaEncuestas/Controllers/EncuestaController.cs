@@ -1,4 +1,6 @@
-﻿using SistemaEncuestas.Bussiness;
+﻿using Microsoft.AspNet.Identity;
+using SistemaEncuestas.Bussiness;
+using SistemaEncuestas.Models;
 using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.ViewModels;
 using System;
@@ -12,15 +14,18 @@ namespace SistemaEncuestas.Controllers
         EncuestaService service;
         PreguntaService preguntaService;
         RespuestaService respuestaService;
+        RespuestaUsuarioService respuestaUsuarioService;
         UsuarioService usuarioService;
         public EncuestaController(EncuestaService service,
                                   PreguntaService preguntaService,
                                   RespuestaService respuestaService,
+                                  RespuestaUsuarioService respuestaUsuarioService,
                                   UsuarioService usuarioService)
         {
             this.service = service;
             this.preguntaService = preguntaService;
             this.respuestaService = respuestaService;
+            this.respuestaUsuarioService = respuestaUsuarioService;
             this.usuarioService = usuarioService;
         }
 
@@ -28,6 +33,7 @@ namespace SistemaEncuestas.Controllers
             this(new EncuestaService(),
                   new PreguntaService(),
                   new RespuestaService(),
+                  new RespuestaUsuarioService(),
                   new UsuarioService())
         {
 
@@ -111,19 +117,25 @@ namespace SistemaEncuestas.Controllers
         public ActionResult Responder(int id)
         {
             EncuestaViewModel preguntas = service.CargarPreguntas(id);
+            ViewBag.User = User.Identity.GetUserId();
             return View(preguntas);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "User, Admin")]
-        public ActionResult Responder(EncuestaViewModel evm)
+        public ActionResult Responder(List<RespuestaUsuario> respuestas)
         {
-            //if (respuestaService.Guardar(evm.Respuestas))
-            //    return RedirectToAction("Index", "Categoria");
+            bool guardar = respuestaUsuarioService.Guardar(respuestas);
 
-            //return View(evm);
-
-            return View(new EncuestaViewModel());
+            if (guardar)
+                return RedirectToAction("Details/" + respuestas[0].IdEncuesta, "Categoria");
+            else 
+            {
+                EncuestaViewModel preguntas = service.CargarPreguntas(respuestas[0].IdEncuesta);
+                ViewBag.User = User.Identity.GetUserId();
+                return View(preguntas);
+            }
         }
     }
 }

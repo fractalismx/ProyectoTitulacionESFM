@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
-using SistemaEncuestas.Models.Domain;
+﻿using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.Repository;
 using SistemaEncuestas.Models.Repository.Entity;
 using SistemaEncuestas.Models.Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SistemaEncuestas.Bussiness
 {
@@ -56,13 +54,18 @@ namespace SistemaEncuestas.Bussiness
         {
             try
             {
-                foreach (var item in respuestas)
+                if (respuestas != null && respuestas.Count > 0)
                 {
-                    //item.IdUsuario = HttpContext.Current.User.Identity.GetUserId();
-                    repository.Create(item);
+                    foreach (var item in respuestas)
+                        repository.Create(item);
+
+                    unitOfWork.Commit();
+                    return true;
                 }
-                unitOfWork.Commit();
-                return true;
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
