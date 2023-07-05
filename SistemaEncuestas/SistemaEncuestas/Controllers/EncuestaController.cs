@@ -5,6 +5,7 @@ using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace SistemaEncuestas.Controllers
@@ -115,10 +116,20 @@ namespace SistemaEncuestas.Controllers
         [HttpGet]
         [Authorize(Roles = "Usuario, Admin")]
         public ActionResult Responder(int id)
-        {
-            EncuestaViewModel preguntas = service.CargarPreguntas(id);
-            ViewBag.User = User.Identity.GetUserId();
-            return View(preguntas);
+        {        
+            List <RespuestaUsuario> respuestaUsuario = respuestaUsuarioService.ListarTodo().Where(c => c.IdUsuario == User.Identity.GetUserId()).ToList();
+            
+            if (respuestaUsuario.Count > 0)
+            {
+                TempData["ErrorMessage"] = "Encuesta ya contestada";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                EncuestaViewModel preguntas = service.CargarPreguntas(id);
+                ViewBag.User = User.Identity.GetUserId();
+                return View(preguntas);
+            }
         }
 
         [HttpPost]

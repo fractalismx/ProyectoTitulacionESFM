@@ -13,6 +13,15 @@
 </script>
 
 <div class="mt-4 p-5 bg-primary text-white rounded">
+
     <h1>Sistema de encuestas</h1>
-    <p class="lead">Sistema interno de encuestas.</p>
+
+    @if (@TempData["ErrorMessage"] != null)
+    {
+        <p class="lead">@TempData["ErrorMessage"]</p>
+    }
+    else
+    {
+        <p class="lead">Sistema interno de encuestas.</p>
+    }
 </div>

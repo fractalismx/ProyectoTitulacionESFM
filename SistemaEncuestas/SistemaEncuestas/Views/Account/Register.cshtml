@@ -62,32 +62,7 @@
     </div>
 }
 
-@*<select id="ddlist"> </select>*@
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @*<script type="text/javascript">
-        $.ajax(
-            {
-                url: "http://localhost:49880/Categoria/GetCategorias",
-                type: 'GET',
-                datatype: 'JSON',
-                success: function (lista)
-                {
-                    $('#ddlist').append($('<option></option>').val(0).html("Seleccionar uno"));
-
-                    $.each(lista, function (i, item)
-                    {
-                        $('#ddlist').append($('<option></option>').val(item.id).html(item.texto));
-                    });
-                }
-            });
-
-        $("#ddlist").on('change', function ()
-        {
-            alert($("#ddlist option:selected"));
-        });
-    </script>*@
 }
