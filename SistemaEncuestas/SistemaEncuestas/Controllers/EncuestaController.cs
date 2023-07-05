@@ -129,7 +129,7 @@ namespace SistemaEncuestas.Controllers
             bool guardar = respuestaUsuarioService.Guardar(respuestas);
 
             if (guardar)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             else 
             {
                 EncuestaViewModel preguntas = service.CargarPreguntas(respuestas[0].IdEncuesta);
