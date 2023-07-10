@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using SistemaEncuestas.Models;
-
-namespace SistemaEncuestas.Models.Repository.Infrastructure
+﻿namespace SistemaEncuestas.Models.Repository.Infrastructure
 {
     public class ContextFactory
     {

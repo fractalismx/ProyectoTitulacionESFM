@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using SistemaEncuestas.Bussiness;
 using SistemaEncuestas.Models.Domain;
-using System;
+using SistemaEncuestas.Models.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SistemaEncuestas.Controllers
@@ -18,10 +16,11 @@ namespace SistemaEncuestas.Controllers
             this.service = service;
         }
 
-        public UsuarioController():this (new UsuarioService())
+        public UsuarioController() : this(new UsuarioService())
         {
 
         }
+
         // GET: Usuario
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -42,11 +41,21 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin, User")]
+        [Authorize(Roles = "Admin, User")]
         public ActionResult ListEncuestas()
         {
             string idUser = HttpContext.User.Identity.GetUserId();
             return View(service.ListarEncuestas(idUser));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, User")]
+        public ActionResult DetalleEncuestas(int id)
+        {
+            string idUser = HttpContext.User.Identity.GetUserId();
+
+            UsuarioEncuestaViewModel contestada = service.DetalleEncuestas(idUser, id);
+            return View(contestada);
         }
 
         [HttpGet]

@@ -1,27 +1,38 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Bienvenido";
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function ()
-    {
-        $("p").click(function ()
-        {
+    $(document).ready(function () {
+        $("p").click(function () {
             $(this).hide();
         });
     });
 </script>
 
-<div class="mt-4 p-5 bg-primary text-white rounded">
 
-    <h1>Sistema de encuestas</h1>
-
-    @if (@TempData["ErrorMessage"] != null)
+@if (@TempData["ErrorMessage"] != null)
+{
+    if (Convert.ToBoolean(TempData["Status"]))
     {
-        <p class="lead">@TempData["ErrorMessage"]</p>
+        <div class="mt-4 p-5 bg-success text-white rounded">
+            <h1>Sistema de encuestas</h1>
+            <p class="lead">@TempData["ErrorMessage"]</p>
+        </div>
     }
     else
     {
-        <p class="lead">Sistema interno de encuestas.</p>
+        <div class="mt-4 p-5 bg-danger text-white rounded">
+            <h1>Sistema de encuestas</h1>
+            <p class="lead">@TempData["ErrorMessage"]</p>
+        </div>
     }
-</div>
+}
+else
+{
+    <div class="mt-4 p-5 bg-secondary text-white rounded">
+        <h1>Sistema de encuestas</h1>
+        <p class="lead">Sistema interno de encuestas.</p>
+    </div>
+}
+

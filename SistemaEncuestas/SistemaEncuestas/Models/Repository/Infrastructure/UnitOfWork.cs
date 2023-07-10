@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SistemaEncuestas.Models.Repository.Infrastructure
+﻿namespace SistemaEncuestas.Models.Repository.Infrastructure
 {
     public class UnitOfWork: IUnitOfWork
     {

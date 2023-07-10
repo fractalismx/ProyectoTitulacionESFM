@@ -2,10 +2,10 @@
 using SistemaEncuestas.Models.Repository;
 using SistemaEncuestas.Models.Repository.Entity;
 using SistemaEncuestas.Models.Repository.Infrastructure;
+using SistemaEncuestas.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SistemaEncuestas.Bussiness
 {
@@ -15,6 +15,7 @@ namespace SistemaEncuestas.Bussiness
         ICRUD<Respuesta> repositoryRespuesta;
         ICRUD<Pregunta> repositoryPregunta;
         ICRUD<Encuesta> repositoryEncuesta;
+        ICRUD<RespuestaUsuario> repositoryRespuestaUsuario;
 
         IUnitOfWork unitOfWork;
 
@@ -22,12 +23,14 @@ namespace SistemaEncuestas.Bussiness
                               ICRUD<Respuesta> repositoryRespuesta,
                               ICRUD<Pregunta> repositoryPregunta,
                               ICRUD<Encuesta> repositoryEncuesta,
+                              ICRUD<RespuestaUsuario> repositoryRespuestaUsuario,
                               IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.repositoryRespuesta = repositoryRespuesta;
             this.repositoryPregunta = repositoryPregunta;
             this.repositoryEncuesta = repositoryEncuesta;
+            this.repositoryRespuestaUsuario = repositoryRespuestaUsuario;
             this.unitOfWork = unitOfWork;
         }
 
@@ -35,6 +38,7 @@ namespace SistemaEncuestas.Bussiness
                                        new RespuestaRepository(),
                                        new PreguntaRepository(),
                                        new EncuestaRepository(),
+                                       new RespuestaUsuarioRepository(),
                                        new UnitOfWork())
         {
 
@@ -56,11 +60,33 @@ namespace SistemaEncuestas.Bussiness
         {
             List<Encuesta> enc = new List<Encuesta>();
 
-
-            //enc = repositoryRespuesta.GetAll().Where(c=>c.IdUsuario==id).Select(c => c.Preguntas.Encuestas).Distinct().ToList();
+            enc = repositoryRespuestaUsuario.GetAll()
+                .Where(c => c.IdUsuario == id)
+                .Select(c => c.Preguntas.Encuestas)
+                .Distinct().ToList();
 
             return enc;
-            
+        }
+
+        public UsuarioEncuestaViewModel DetalleEncuestas(string idUsuario, int idEncuesta)
+        {
+            EncuestaViewModel encuestaViewModels = new EncuestaViewModel();
+            EncuestaService enc = new EncuestaService();
+            UsuarioEncuestaViewModel usuarioEncuestaViewModel = new UsuarioEncuestaViewModel();
+
+            encuestaViewModels = enc.CargarPreguntas(idEncuesta);
+            usuarioEncuestaViewModel.Preguntas = encuestaViewModels.Preguntas;
+            usuarioEncuestaViewModel.Respuestas = encuestaViewModels.Respuestas;
+            usuarioEncuestaViewModel.RespuestaUsuario = repositoryRespuestaUsuario.GetAll()
+                .Where
+                (
+                    c => c.IdUsuario == idUsuario 
+                    && 
+                    c.IdEncuesta == idEncuesta
+                )
+                .Select(c => c).ToList();
+
+            return usuarioEncuestaViewModel;
         }
 
         public bool Guardar(Usuario usuario)

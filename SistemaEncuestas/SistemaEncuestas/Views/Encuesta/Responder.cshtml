@@ -16,7 +16,6 @@
             @Html.DisplayFor(modelItem => Model.Preguntas[i].NombreP)
             <input hidden name="respuestas[@j].IdPregunta" value=@Model.Preguntas[i].Id />
             <input hidden name="respuestas[@j].IdEncuesta" value=@Model.Preguntas[i].IdEncuestas />
-            <input hidden name="respuestas[@j].IdUsuario" value=@ViewBag.User />
         </dt>
 
         foreach (var respuesta in Model.Respuestas[i])

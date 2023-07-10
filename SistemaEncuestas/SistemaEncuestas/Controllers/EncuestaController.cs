@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using SistemaEncuestas.Bussiness;
-using SistemaEncuestas.Models;
 using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.ViewModels;
 using System;
@@ -12,18 +11,19 @@ namespace SistemaEncuestas.Controllers
 {
     public class EncuestaController : Controller
     {
-        EncuestaService service;
+        EncuestaService encuestaService;
         PreguntaService preguntaService;
         RespuestaService respuestaService;
         RespuestaUsuarioService respuestaUsuarioService;
         UsuarioService usuarioService;
-        public EncuestaController(EncuestaService service,
+
+        public EncuestaController(EncuestaService encuestaService,
                                   PreguntaService preguntaService,
                                   RespuestaService respuestaService,
                                   RespuestaUsuarioService respuestaUsuarioService,
                                   UsuarioService usuarioService)
         {
-            this.service = service;
+            this.encuestaService = encuestaService;
             this.preguntaService = preguntaService;
             this.respuestaService = respuestaService;
             this.respuestaUsuarioService = respuestaUsuarioService;
@@ -42,9 +42,10 @@ namespace SistemaEncuestas.Controllers
 
         // GET: Encuesta
         [Authorize(Roles = "User, Admin")]
+        [HttpGet]
         public ActionResult Index()
         {
-            List<Encuesta> lista = service.ListarTodo();
+            List<Encuesta> lista = encuestaService.ListarTodo();
 
             if (lista != null)
                 return View(lista);
@@ -56,7 +57,7 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Details(int id)
         {
-            return View(service.ObtenerPorId(id));
+            return View(encuestaService.ObtenerPorId(id));
         }
 
         [HttpPost]
@@ -64,7 +65,7 @@ namespace SistemaEncuestas.Controllers
         public ActionResult Delete(Encuesta encuesta)
         {
             int aux = encuesta.IdCategorias;
-            if (service.Eliminar(encuesta.Id))
+            if (encuestaService.Eliminar(encuesta.Id))
                 return RedirectToAction("Details/" + aux, "Categoria");
             return View(encuesta);
         }
@@ -73,7 +74,7 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
-            return View(service.ObtenerPorId(id));
+            return View(encuestaService.ObtenerPorId(id));
         }
 
         [HttpGet]
@@ -91,7 +92,7 @@ namespace SistemaEncuestas.Controllers
         {
             encuesta.Alta = DateTime.Now;
 
-            if (service.Guardar(encuesta))
+            if (encuestaService.Guardar(encuesta))
                 return RedirectToAction("Details/" + encuesta.IdCategorias, "Categoria");
 
             return View(encuesta);
@@ -101,14 +102,14 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            return View(service.ObtenerPorId(id));
+            return View(encuestaService.ObtenerPorId(id));
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(Encuesta encuesta)
         {
-            if (service.Actualizar(encuesta))
+            if (encuestaService.Actualizar(encuesta))
                 return RedirectToAction("Details/" + encuesta.IdCategorias, "Categoria");
             return View(encuesta);
         }
@@ -116,18 +117,20 @@ namespace SistemaEncuestas.Controllers
         [HttpGet]
         [Authorize(Roles = "Usuario, Admin")]
         public ActionResult Responder(int id)
-        {        
-            List <RespuestaUsuario> respuestaUsuario = respuestaUsuarioService.ListarTodo().Where(c => c.IdUsuario == User.Identity.GetUserId()).ToList();
-            
+        {
+            List<RespuestaUsuario> respuestaUsuario = 
+                respuestaUsuarioService.ListarTodo()
+                .Where(c => c.IdUsuario == User.Identity.GetUserId()).ToList();
+
             if (respuestaUsuario.Count > 0)
             {
                 TempData["ErrorMessage"] = "Encuesta ya contestada";
+                TempData["Status"] = false;
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                EncuestaViewModel preguntas = service.CargarPreguntas(id);
-                ViewBag.User = User.Identity.GetUserId();
+                EncuestaViewModel preguntas = encuestaService.CargarPreguntas(id);
                 return View(preguntas);
             }
         }
@@ -137,14 +140,22 @@ namespace SistemaEncuestas.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Responder(List<RespuestaUsuario> respuestas)
         {
+            string idUser = HttpContext.User.Identity.GetUserId();
+
+            for (int i = 0; i < respuestas.Count; i++)
+                respuestas[i].IdUsuario = idUser;
+
             bool guardar = respuestaUsuarioService.Guardar(respuestas);
 
             if (guardar)
-                return RedirectToAction("Index", "Home");
-            else 
             {
-                EncuestaViewModel preguntas = service.CargarPreguntas(respuestas[0].IdEncuesta);
-                ViewBag.User = User.Identity.GetUserId();
+                TempData["ErrorMessage"] = "Encuesta constestada satisfactoriamente";
+                TempData["Status"] = true;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                EncuestaViewModel preguntas = encuestaService.CargarPreguntas(respuestas[0].IdEncuesta);
                 return View(preguntas);
             }
         }

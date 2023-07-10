@@ -1,0 +1,44 @@
+﻿@model SistemaEncuestas.Models.ViewModels.UsuarioEncuestaViewModel
+@{
+    ViewBag.Title = "Detalle de encuesta";
+}
+
+<h2>Detalle de encuesta</h2>
+
+@{
+    var j = 0;
+
+    for (int i = 0; i < Model.Preguntas.Count; i++)
+    {
+        <dt>
+            @Html.DisplayFor(modelItem => Model.Preguntas[i].NombreP)
+        </dt>
+
+        foreach (var respuesta in Model.Respuestas[i])
+        {
+            <dd>
+                <div>
+                    @if (Model.RespuestaUsuario[i].IdRespuesta == respuesta.Id)
+                    {
+                        @Html.RadioButton("respuestas[" + j + "].IdRespuesta", respuesta.Id, true, new { disabled = "disabled" })
+                    }
+                    else
+                    {
+                        @Html.RadioButton("respuestas[" + j + "].IdRespuesta", respuesta.Id, false, new { disabled = "disabled" })
+                    }
+
+                    @Html.TextBoxFor(modelItem => respuesta.Nombre, new { @hidden = "hidden" })
+                    @Html.DisplayFor(modelItem => respuesta.Nombre)
+                </div>
+            </dd>
+        }
+
+        j++;
+    }
+}
+
+@Html.ActionLink("Regresar", "ListEncuestas")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

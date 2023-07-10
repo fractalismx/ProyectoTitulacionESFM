@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<SistemaEncuestas.Models.Domain.Encuesta>
 
 @{
-    ViewBag.Title = "ListEncuestas";
+    ViewBag.Title = "Encuestas contestadas";
 }
 
-<h2>ListEncuestas</h2>
+<h2>Encuestas contestadas</h2>
 
 <table class="table">
     <tr>
@@ -23,24 +23,25 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Alta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdCategorias)
-        </td>
-        <td>
-            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) 
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCategorias)
+            </td>
+            <td>
+                @Html.ActionLink("Detalles", "DetalleEncuestas", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

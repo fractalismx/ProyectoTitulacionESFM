@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
-using SistemaEncuestas.Models.Domain;
+﻿using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.Repository;
 using SistemaEncuestas.Models.Repository.Entity;
 using SistemaEncuestas.Models.Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SistemaEncuestas.Bussiness
 {
