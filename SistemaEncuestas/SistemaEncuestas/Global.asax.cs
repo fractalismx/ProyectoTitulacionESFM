@@ -21,6 +21,8 @@ namespace SistemaEncuestas
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            HttpContext.Current.Application.Add("Version", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
             GlobalConfiguration.Configuration
                                .Formatters
                                .JsonFormatter

@@ -20,7 +20,6 @@
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    @*ActionLink(this HtmlHelper htmlHelper, string linkText, string actionName, object routeValues, object htmlAttributes)*@
                     <li class="nav-item">@Html.ActionLink("Categorias", "Index", "Categoria", new { area = "" }, new { @class = "nav-link active" })</li>
                     <li class="nav-item">@Html.ActionLink("Mis encuestas contestadas", "ListEncuestas", "Usuario", new { area = "" }, new { @class = "nav-link active" })</li>
                 </ul>
@@ -31,14 +30,9 @@
     <div class="container-lg" style="padding-top: 3em !important;">
         @RenderBody()
 
-        @{ 
-            System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
-            System.Diagnostics.FileVersionInfo fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(asm.Location);
-            string version = fileVersionInfo.FileVersion;
-        }
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Sistema de Encuestas - @version</p>
+            <p>&copy; @DateTime.Now.Year - Sistema de Encuestas - @HttpContext.Current.Application["Version"].ToString()</p>
         </footer>
     </div>
 
