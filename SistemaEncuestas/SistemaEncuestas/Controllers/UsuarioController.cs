@@ -1,15 +1,23 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using SistemaEncuestas.Bussiness;
+using SistemaEncuestas.Models;
 using SistemaEncuestas.Models.Domain;
 using SistemaEncuestas.Models.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace SistemaEncuestas.Controllers
 {
     public class UsuarioController : Controller
     {
         UsuarioService service;
+        private ApplicationUserManager _userManager;
 
         public UsuarioController(UsuarioService service)
         {
@@ -21,11 +29,24 @@ namespace SistemaEncuestas.Controllers
 
         }
 
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         // GET: Usuario
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             List<Usuario> lista = service.ListarTodo();
+            TempData["MyUser"] = false;
 
             if (lista != null)
                 return View(lista);
@@ -35,7 +56,7 @@ namespace SistemaEncuestas.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             return View(service.ObtenerPorId(id));
         }
@@ -60,7 +81,7 @@ namespace SistemaEncuestas.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             if (service.Eliminar(id))
                 return RedirectToAction("Index");
@@ -69,36 +90,86 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Create()
-        {
-            return View(new Usuario());
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Create(Usuario usuario)
-        {
-            if (service.Guardar(usuario))
-                return RedirectToAction("Index");
-
-            return View(usuario);
-        }
-
-        [HttpGet]
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View(service.ObtenerPorId(id));
+            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+                id = User.Identity.GetUserId();
+
+            var user = service.ObtenerPorId(id);
+
+            IEnumerable<Genero> GenderType = Enum.GetValues(typeof(Genero)).Cast<Genero>();
+
+            user.ActionsList = from action in GenderType
+                               select new SelectListItem
+                               {
+                                   Text = action.ToString(),
+                                   Value = ((int)action).ToString()
+                               };
+
+            return View(user);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Edit(Usuario usuario)
+        public async Task<ActionResult> Edit(Usuario usuario)
         {
-            if (service.Actualizar(usuario))
-                return RedirectToAction("Index");
-            return View(usuario);
+            var user = UserManager.FindById(usuario.Id);
+
+            IEnumerable<Genero> GenderType = Enum.GetValues(typeof(Genero)).Cast<Genero>();
+
+            usuario.ActionsList = from action in GenderType
+                                  select new SelectListItem
+                                  {
+                                      Text = action.ToString(),
+                                      Value = ((int)action).ToString()
+                                  };
+
+            if (ModelState.IsValid)
+            {
+                if (user != null)
+                {
+                    user.UserName = usuario.Email;
+                    user.Email = usuario.Email;
+                    user.Nombre = usuario.Nombre;
+                    user.Apellidos = usuario.Apellidos;
+                    user.Genero = usuario.Genero;
+
+                    var result = await UserManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            var prueba = TempData["MyUserNow"].ToString();
+                            if (Convert.ToBoolean(prueba))
+                            {
+                                return RedirectToAction("Index", "Manage");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        else if (User.IsInRole("User"))
+                            return RedirectToAction("Index", "Manage");
+                        else
+                            return View(usuario);
+                    }
+                    else
+                    {
+                        return View(usuario);
+                    }
+                }
+                else
+                {
+                    return View(usuario);
+                }
+            }
+            else
+            {
+                return View(usuario);
+            }
         }
     }
 }

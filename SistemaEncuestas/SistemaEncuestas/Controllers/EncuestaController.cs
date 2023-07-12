@@ -115,7 +115,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Usuario, Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Responder(int id)
         {
             List<RespuestaUsuario> respuestaUsuario = 

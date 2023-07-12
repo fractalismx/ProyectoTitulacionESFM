@@ -11,33 +11,21 @@ namespace SistemaEncuestas.Bussiness
 {
     public class UsuarioService
     {
-        ICRUD<Usuario> repository;
-        ICRUD<Respuesta> repositoryRespuesta;
-        ICRUD<Pregunta> repositoryPregunta;
-        ICRUD<Encuesta> repositoryEncuesta;
+        ICRUDUser<Usuario> repository;
         ICRUD<RespuestaUsuario> repositoryRespuestaUsuario;
 
         IUnitOfWork unitOfWork;
 
-        public UsuarioService(ICRUD<Usuario> repository,
-                              ICRUD<Respuesta> repositoryRespuesta,
-                              ICRUD<Pregunta> repositoryPregunta,
-                              ICRUD<Encuesta> repositoryEncuesta,
+        public UsuarioService(ICRUDUser<Usuario> repository,
                               ICRUD<RespuestaUsuario> repositoryRespuestaUsuario,
                               IUnitOfWork unitOfWork)
         {
             this.repository = repository;
-            this.repositoryRespuesta = repositoryRespuesta;
-            this.repositoryPregunta = repositoryPregunta;
-            this.repositoryEncuesta = repositoryEncuesta;
             this.repositoryRespuestaUsuario = repositoryRespuestaUsuario;
             this.unitOfWork = unitOfWork;
         }
 
         public UsuarioService() : this(new UsuarioRepository(),
-                                       new RespuestaRepository(),
-                                       new PreguntaRepository(),
-                                       new EncuestaRepository(),
                                        new RespuestaUsuarioRepository(),
                                        new UnitOfWork())
         {
@@ -80,8 +68,8 @@ namespace SistemaEncuestas.Bussiness
             usuarioEncuestaViewModel.RespuestaUsuario = repositoryRespuestaUsuario.GetAll()
                 .Where
                 (
-                    c => c.IdUsuario == idUsuario 
-                    && 
+                    c => c.IdUsuario == idUsuario
+                    &&
                     c.IdEncuesta == idEncuesta
                 )
                 .Select(c => c).ToList();
@@ -105,7 +93,7 @@ namespace SistemaEncuestas.Bussiness
             }
         }
 
-        public Usuario ObtenerPorId(int id)
+        public Usuario ObtenerPorId(string id)
         {
             try
             {
@@ -122,7 +110,7 @@ namespace SistemaEncuestas.Bussiness
             }
         }
 
-        public bool Eliminar(int id)
+        public bool Eliminar(string id)
         {
             try
             {

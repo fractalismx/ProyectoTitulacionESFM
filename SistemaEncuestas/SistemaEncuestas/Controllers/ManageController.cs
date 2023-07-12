@@ -62,6 +62,8 @@ namespace SistemaEncuestas.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Se ha quitado su número de teléfono."
                 : "";
 
+            TempData["MyUser"] = true;
+
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {

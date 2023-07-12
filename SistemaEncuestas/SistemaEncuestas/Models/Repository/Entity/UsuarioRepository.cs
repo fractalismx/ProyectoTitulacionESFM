@@ -7,20 +7,21 @@ using System.Linq.Expressions;
 
 namespace SistemaEncuestas.Models.Repository.Entity
 {
-    public class UsuarioRepository : ICRUD<Usuario>
+    public class UsuarioRepository : ICRUDUser<Usuario>
     {
-        private SistemaEncuestaContext usuarioContext=null;
+        private SistemaEncuestaContext usuarioContext = null;
 
         public UsuarioRepository()
         {
-            usuarioContext = usuarioContext??new SistemaEncuestaContext();
+            usuarioContext = usuarioContext ?? new SistemaEncuestaContext();
         }
+
         public void Create(Usuario tipo)
         {
             usuarioContext.Usuarios.Add(tipo);
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             Usuario u = GetByID(id);
 
@@ -34,18 +35,18 @@ namespace SistemaEncuestas.Models.Repository.Entity
 
         public IQueryable<Usuario> GetAll()
         {
-            return usuarioContext.Usuarios.Select(c=>c);
+            return usuarioContext.Usuarios.Select(c => c);
         }
 
-        public Usuario GetByID(int id)
+        public Usuario GetByID(string id)
         {
             string i = id.ToString();
-            return usuarioContext.Usuarios.FirstOrDefault(c=>c.Id==i);
+            return usuarioContext.Usuarios.FirstOrDefault(c => c.Id == i);
         }
 
         public void Update(Usuario tipo)
         {
-            Usuario u = GetByID(Int32.Parse(tipo.Id));
+            Usuario u = GetByID(tipo.Id);
 
             if (u != null)
                 usuarioContext.Entry<Usuario>(u).State = EntityState.Detached;

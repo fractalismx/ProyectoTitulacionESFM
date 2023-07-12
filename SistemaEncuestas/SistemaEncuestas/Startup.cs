@@ -36,7 +36,7 @@ namespace SistemaEncuestas
                 user.Nombre = "Admin";
                 user.Email = "admin@ejemplo.com";
                 user.UserName = user.Email;
-                user.Apellidos = "";
+                user.Apellidos = string.Empty;
                 user.Genero = 3;
 
                 string userPWD = "123456";

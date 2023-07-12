@@ -21,7 +21,7 @@ namespace SistemaEncuestas.Controllers
         }
 
         // GET: Categoria
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public ActionResult Index()
         {
             List<Categoria> lista = service.ListarTodo();

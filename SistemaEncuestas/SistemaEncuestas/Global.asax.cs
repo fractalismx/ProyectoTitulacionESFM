@@ -13,7 +13,7 @@ namespace SistemaEncuestas
         {
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configure(WebApiConfig.Register);//añadida
+            GlobalConfiguration.Configure(WebApiConfig.Register);
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
